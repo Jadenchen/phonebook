@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
     char line[MAX_LAST_NAME_SIZE];
     struct timespec start, end;
     double cpu_time1, cpu_time2;
+//	double cpu_time3; //this is for opt1
 
     /* check file opening */
     fp = fopen(DICT_FILE, "r");
@@ -82,6 +83,9 @@ int main(int argc, char *argv[])
     FILE *output;
 #if defined(OPT)
     output = fopen("opt.txt", "a");
+//add to opt1
+#elif defined(OPT1)
+	output = fopen("opt1.txt", "a");
 #else
     output = fopen("orig.txt", "a");
 #endif

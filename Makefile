@@ -2,8 +2,9 @@ CC ?= gcc
 CFLAGS_common ?= -Wall -std=gnu99
 CFLAGS_orig = -O0
 CFLAGS_opt  = -O0
+CFLAGS_opt1 = -O0
 
-EXEC = phonebook_orig phonebook_opt
+EXEC = phonebook_orig phonebook_opt phonebook_opt1
 all: $(EXEC)
 
 SRCS_common = main.c
@@ -15,7 +16,12 @@ phonebook_orig: $(SRCS_common) phonebook_orig.c phonebook_orig.h
 
 phonebook_opt: $(SRCS_common) phonebook_opt.c phonebook_opt.h
 	$(CC) $(CFLAGS_common) $(CFLAGS_opt) \
-		-DIMPL="\"$@.h\"" -o $@ \
+		-DIMPL="\"$@.h\"" -DOPT -o $@ \
+		$(SRCS_common) $@.c
+
+phonebook_opt1: $(SRCS_common) phonebook_opt1.c phonebook_opt1.h
+	$(CC) $(CFLAGS_common) $(CFLAGS_opt) \
+		-DIMPL="\"$@.h\"" -DOPT1 -o $@ \
 		$(SRCS_common) $@.c
 
 run: $(EXEC)
@@ -29,6 +35,9 @@ cache-test: $(EXEC)
 	perf stat --repeat 100 \
 		-e cache-misses,cache-references,instructions,cycles \
 		./phonebook_opt
+	perf stat --repeat 100 \
+                -e cache-misses,cache-references,instructions,cycles \
+                ./phonebook_opt1
 
 output.txt: cache-test calculate
 	./calculate
@@ -42,4 +51,4 @@ calculate: calculate.c
 .PHONY: clean
 clean:
 	$(RM) $(EXEC) *.o perf.* \
-	      	calculate orig.txt opt.txt output.txt runtime.png
+	      	calculate o*.txt output.txt runtime.png

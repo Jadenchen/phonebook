@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     output = fopen("opt.txt", "a");
 //add to opt1
 #elif defined(OPT1)
-	output = fopen("opt1.txt", "a");
+    output = fopen("opt1.txt", "a");
 #else
     output = fopen("orig.txt", "a");
 #endif

@@ -4,7 +4,8 @@ CFLAGS_orig = -O0
 CFLAGS_opt  = -O0
 CFLAGS_opt1 = -O0
 
-EXEC = phonebook_orig phonebook_opt phonebook_opt1
+EXEC = phonebook_orig phonebook_opt phonebook_opt1 
+#EXEC = phonebook_opt1
 all: $(EXEC)
 
 SRCS_common = main.c
